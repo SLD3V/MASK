@@ -7,7 +7,6 @@
 """
 import os
 import pip
-from packages.visualizers.format import Format as formatter
 from packages.file_handellers.importer import Importer as importer
 from src.constants import Constants as const
 
@@ -32,18 +31,22 @@ class Installer:
 
     @staticmethod
     def run_wizard():
-        formatter.clear()
+        os.system('cls' if os.name == 'nt' else 'clear')
         # taking user_input to decide abt the execution
         ask_usr = input("Do you want to continue ? [Y/n] :: ").strip().upper()
 
         if ask_usr == "Y" or ask_usr == '':
-            formatter.clear()
+            os.system('cls' if os.name == 'nt' else 'clear')
             Installer.installer()
-            formatter.clear()
-            formatter.return_ascii_banner()
+
+            # importing ascii banner from packages.visualizer.format as format
+            from packages.visualizers.format import Format as format
+
+            format.clear()
+            format.return_ascii_banner()
             print("MASK has successfully installed.\n")
             print("Type 'bash mask.sh' to run the program.\n")
-            formatter.line_break()
+            format.line_break()
 
         elif ask_usr == "N":
             print("Requirements aren't satisfied...exiting.")
@@ -53,5 +56,4 @@ class Installer:
             return 0
 
 
-# ----------E N D----------
 Installer.run_wizard()
